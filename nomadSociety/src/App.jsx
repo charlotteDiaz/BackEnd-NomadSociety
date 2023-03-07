@@ -1,10 +1,12 @@
-import './App.css'
+import { Routes } from './Components/Routes/Routes'
+import { BrowserRouter } from "react-router-dom"
+import './App.scss'
 
-function App() {
+export const App = () => {
 
   return (
-    <div>Holi</div>
+    <BrowserRouter>
+      <Routes/>
+    </BrowserRouter>
   )
 }
-
-export default App
