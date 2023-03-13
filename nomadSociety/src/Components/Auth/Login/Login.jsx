@@ -3,17 +3,32 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../../context/UsersState';
 import { Register } from '../Register/Register';
+
 import './Login.scss';
 
 
 export const Login = () => {
   const { login } = useContext(GlobalContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
-  const onFinish = (values) => {
-    login(values);
+  useEffect(() => {
     navigate('/');
+
+    if (isLoggedIn) {
+      console.log('El usuario ha iniciado sesión correctamente.');
+    }
+  }, [isLoggedIn]);
+
+  const onFinish = async (values) => {
+    login(values);
     console.log('Success:', values);
   };
 
@@ -21,6 +36,7 @@ export const Login = () => {
     console.log('Failed:', errorInfo);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -34,7 +50,7 @@ export const Login = () => {
   return (
     <div className='container'>
       <div className='primary-container'>
-        <div className='logo-login' onClick={() => navigate('/')}>nomad</div>
+        <div className='logo' onClick={() => navigate('/')}>nomad</div>
         <div className="carousel-container">
           <div className="carousel-box">
             <div className="carousel-element">
