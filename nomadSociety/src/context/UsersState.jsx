@@ -2,14 +2,9 @@ import React, { createContext, useReducer } from 'react'
 import AppReducer  from './AppReducer.js'
 import axios from 'axios'
 
-const token = JSON.parse(localStorage.getItem("token"));
-
 const initialState = {
-  token: token ? token : null,
-  user: {},
-  isSuccess:false,
-  isError:false,
-
+  users : [],
+  user: {}
 };
 
 export const GlobalContext = createContext(initialState);
@@ -18,29 +13,16 @@ export const UsersProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   const login = async (user) => {
-    try {
-      
-      const res = await axios.post('https://backend-nomadsociety-development.up.railway.app/login',user);
-      dispatch ({
-        type: "POST_USER",
-        payload: res.data
-      });
-      if (res.data) {
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-      };
-    } catch (error) {
-      console.error(error) 
-      dispatch ({
-        type: "POST_USER_ERROR"
-      });
+    const res = await axios.post('https://backend-nomadsociety-development.up.railway.app/login',user);
+    dispatch ({
+      type: "POST_USER",
+      payload: res.data
+    });
+    if (res.data) {
+      localStorage.setItem("token", JSON.stringify(res.data.token));
     };
-      
-    }
-const reset =()=>{
-  dispatch ({
-    type: "RESET"
-  });
-}
+  };
+
   const register = async (user) => {
     const res = await axios.post('https://backend-nomadsociety-development.up.railway.app/register',user);
     dispatch ({
@@ -52,30 +34,22 @@ const reset =()=>{
     };
   };
 
-  const getUserInfo = async () => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    const res = await axios.get('', {
-      headers: {
-        authorization: token,
-      },
-    });
+  const getUsers = async () => {
+    const res = await axios.get("")
       dispatch({
-        type: "GET_USER_INFO",
-        payload: res.data,
+        type: "GET_USERS",
+        payload: res.data.results,
     });
   };
 
   return (
     <GlobalContext.Provider
       value={{
-        token: state.token,
+        users: state.users,
+        getUsers,
         user: state.user,
-        isSuccess: state.isSuccess,
-        isError: state.isError,
         login,
         register,
-        getUserInfo,
-        reset
       }}
     >
       {children}
