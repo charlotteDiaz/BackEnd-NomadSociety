@@ -8,16 +8,10 @@ import { Login } from './Components/Auth/Login/Login'
 
 
 export const App = () => {
-<<<<<<< HEAD
+
 localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGUwNDhjMmI0NzQzYjcxM2RlMDYwZSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE2Nzg2NDAyNjksImV4cCI6MTY4MzgyNDI2OX0.FEFtiq0npjbzPz_YTslGuqtQfQ7bbYknfHP1ttuxNac')
   const token = localStorage.getItem('token')
  localStorage.clear()
-=======
-//  //localStorage.setItem('token', 'dd')
-  const token = localStorage.getItem('token')
-//  localStorage.clear()
-  // console.log(token)
->>>>>>> 0e6922589d1eeb4966cc36b28894c663e740dc20
 
   return (
     <div className='body'>
