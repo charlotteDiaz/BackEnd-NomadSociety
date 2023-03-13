@@ -11,12 +11,8 @@ import { useContext } from 'react'
 
 export const App = () => {
 
-<<<<<<< HEAD
   const { token } = useContext(GlobalContext);
 
-=======
-  const token = localStorage.getItem('token')
->>>>>>> master
   return (
     <div className='body'>
       <BrowserRouter>
