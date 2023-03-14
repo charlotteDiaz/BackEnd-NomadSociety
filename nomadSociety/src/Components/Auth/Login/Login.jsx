@@ -1,37 +1,44 @@
-import { Button, Form, Input, Modal, notification } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../../context/UsersState';
 import { Register } from '../Register/Register';
+
 import './Login.scss';
 
 
 export const Login = () => {
-  const [form] = Form.useForm();
-
-  const { login, isError, reset } = useContext(GlobalContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { login } = useContext(GlobalContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  const onFinish = (values) => {
-    login(values);
-    form.resetFields()
-    navigate('/');
-    reset()
-  };
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   useEffect(() => {
-    if (isError) {
-      notification.error({
-        message: "Wrong email or password. Try Again!!"
-      });
-      reset()
-    };
-  }, [isError]);
+    navigate('/');
 
+    if (isLoggedIn) {
+      console.log('El usuario ha iniciado sesión correctamente.');
+    }
+  }, [isLoggedIn]);
+
+  const onFinish = async (values) => {
+    login(values);
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
-    reset()
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -43,7 +50,7 @@ export const Login = () => {
   return (
     <div className='container'>
       <div className='primary-container'>
-        <div className='logo-login' onClick={() => navigate('/')}>nomad</div>
+        <div className='logo' onClick={() => navigate('/')}>nomad</div>
         <div className="carousel-container">
           <div className="carousel-box">
             <div className="carousel-element">
@@ -74,8 +81,8 @@ export const Login = () => {
             remember: true,
           }}
           onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
           autoComplete="off"
-          form={form}
         >
           <div className='title-login'>
             <h2>Login</h2>
@@ -86,8 +93,7 @@ export const Login = () => {
             rules={[
               {
                 required: true,
-                pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-                message: 'Please input a correct e-mail!',
+                message: 'Please input your username!',
               },
             ]}
           >
