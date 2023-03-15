@@ -6,7 +6,7 @@ function Post(props){
 
 
   return(
-    <Card size='medium' style={{ width: 800, height: 120, backgroundColor: '#f0f0f0'}}>
+    <Card size='large' style={{ width: 800, backgroundColor: '#f0f0f0'}}>
       <div className='containerPost'>
         <div className='userInfo'>
           <img src={ profilePhoto } className='imgProfile'/>

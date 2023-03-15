@@ -9,7 +9,9 @@
   flex-direction: row;
   gap: 1rem;
   img {
-    border-radius: 50%;
+    clip-path: circle();
+    width: 7rem;
+    height: 5rem;
   }
 }
 
