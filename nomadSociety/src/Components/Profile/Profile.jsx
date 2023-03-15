@@ -1,10 +1,13 @@
 import React from 'react'
+import Post from '../Post/Post'
 
 import './Profile.scss'
 
 export const Profile = () => {
 
   return (
-    <div>Profile</div>
+    <div className='containerProfile'>
+      
+    </div>
   )
 }
