@@ -31,8 +31,8 @@ export const Header = () => {
   }
 
   const resetInput = (e) => {
+    // setDisplay('x')
     e.target.value = ''
-    setDisplay('x')
   }
 
   return (
