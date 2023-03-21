@@ -3,6 +3,7 @@ import CommentsForm from './CommentsForm';
 import { deleteComments, getComments } from './ServiceCommentCreate';
 import { CommentOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { GlobalContext } from '../../context/UsersState';
+import { DateComponent } from '../DateComponent/DateComponent';
 
 const CommentsPrint = (props) => {
   const { postId } = props;
@@ -12,23 +13,20 @@ const CommentsPrint = (props) => {
 
   const clickHandler = () => {
     setClick(!click)
+    print()
   }
+  
   const deletehandler = (commentId) => {
     const deleteComment = async () => {
       await deleteComments(commentId);
       setComments(comments.filter(comment => comment._id !== commentId));
     }
-    deleteComment()
+    deleteComment();
   }
-
-  useEffect(() => {
-    const print = async () => {
-      const res = await getComments(postId);
-      setComments(res);
-    }
-    print()
-  }, [])
-
+  const print = async () => {
+    const res = await getComments(postId);
+    setComments(res);
+  }
 
   return (
     <div>
@@ -36,12 +34,12 @@ const CommentsPrint = (props) => {
       <div>
         {click === true && comments && comments.map((comment) => {
           return (
-            <div key={comment._id}>
+            <div key={comment._id+1}>
               <p>{comment.author.displayName}</p>
-              <p>{comment.createdAt}</p>
+              <DateComponent datePost={comment.createdAt}/>
               <p>{comment.content}</p>
               <div>
-                {user._id === comment.author.displayName && <div>
+                {user.displayName === comment.author.displayName && <div>
                   <EditOutlined />
                   <DeleteOutlined onClick={() => deletehandler(comment._id)} />
                 </div>}
@@ -57,4 +55,4 @@ const CommentsPrint = (props) => {
   )
 }
 
-export default CommentsPrint;
+export default CommentsPrint
