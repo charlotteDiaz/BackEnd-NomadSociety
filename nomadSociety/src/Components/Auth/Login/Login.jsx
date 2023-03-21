@@ -112,14 +112,14 @@ export const Login = () => {
                 span: 16,
               }}
             >
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" className='login-title'>
                 Login
               </Button>
             </Form.Item>
           </Form>
           <div className='register-content'>
             <p>You don´t have an account?</p>
-            <Button type="link" onClick={showModal}  className="register-button">Register</Button>
+            <Button type="link" onClick={showModal} >Register</Button>
           </div>
           <Modal title="Register" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
             <Register onCancel={handleCancel} />
