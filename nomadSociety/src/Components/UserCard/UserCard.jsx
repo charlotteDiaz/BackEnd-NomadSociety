@@ -12,8 +12,6 @@ import FollowedModal from '../FollowedModal/FollowedModal';
 
 const UserCard = () => {
   const [visible, setVisible] = useState(false);
-  const [visiblers, setVisiblers] = useState(false);
-
   const { getUserInfo, user, deleteUser, logOut, reset, getUserById } = useContext(GlobalContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showEditModal = () => {
@@ -23,11 +21,6 @@ const UserCard = () => {
 const handleShowFollowers = async () => {
   console.log('kndakdhik')
     setVisible(true);
-  
-};
-const handleShowFollowed = async () => {
- console.log('juujujujujujuujuu')
-    setVisiblers(true);
   
 };
     return (
@@ -54,8 +47,8 @@ const handleShowFollowed = async () => {
               <span onClick={handleShowFollowers}>{user.followersCount}{' '}seguidores</span>
               <FollowersModal visible={visible} onClose={() => setVisible(false)}/>
         
-              <span onClick={handleShowFollowed}>{user.followedCount}{' '}seguidos</span>
-              <FollowedModal visiblers={visiblers} onClosers={() => setVisiblers(false)}/>
+              <span onClick={handleShowFollowers}>{user.followedCount}{' '}seguidos</span>
+              <FollowedModal visible={visible} onClose={() => setVisible(false)}/>
 
             </div>
             <br />
