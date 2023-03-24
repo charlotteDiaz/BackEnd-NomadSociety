@@ -14,11 +14,6 @@ const users = (state, action) => {
         ...state,
         isError: true,
       };
-      case "REGISTER_ERROR":
-      return {
-        ...state,
-        isErrorRegister: true,
-      };
       case "LOGOUT":
       return {
         ...state,
@@ -29,7 +24,6 @@ const users = (state, action) => {
         return {
           ...state,
           isError: false,
-          isErrorRegister: false,
           isSuccess:false,
           isLogOut: false,
         };

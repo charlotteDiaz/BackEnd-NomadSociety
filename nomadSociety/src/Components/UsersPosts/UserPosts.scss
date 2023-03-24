@@ -3,8 +3,7 @@
     height: 100vh;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    // flex-direction: column;
+    flex-direction: row;
     // padding: 1rem;
     .post-container-uni{
         display: flex;
@@ -31,7 +30,4 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-}
-.ant-image-mask{
-    border-radius: 1%;
 }

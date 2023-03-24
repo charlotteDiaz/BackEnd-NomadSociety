@@ -10,7 +10,6 @@ const initialState = {
   user: user ? user : null,
   isSuccess: false,
   isError: false,
-  isErrorRegister: false,
   isLogOut: false,
 };
 
@@ -70,7 +69,7 @@ export const UsersProvider = ({ children }) => {
     } catch (error) {
       console.error(error)
       dispatch({
-        type: "REGISTER_ERROR"
+        type: "POST_USER_ERROR"
       });
     }
   };
@@ -138,7 +137,6 @@ export const UsersProvider = ({ children }) => {
         user: state.user,
         isSuccess: state.isSuccess,
         isError: state.isError,
-        isErrorRegister:state.isErrorRegister,
         isLogOut: state.isLogOut,
         login,
         register,

@@ -12,7 +12,7 @@ export const DateComponent = (props) => {
   const time = dayjs().to(dayjs(dateString))
   return (
     <div>
-      <span>{time}</span>
+      <span>{time} <br></br>{datePost}</span>
     </div>
   )
 }
