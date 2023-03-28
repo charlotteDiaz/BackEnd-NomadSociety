@@ -8,7 +8,6 @@ export function MessageBoard() {
   const { user } = useContext(GlobalContext);
   const { socket } = useContext(ChatContext)
   const [events, setEvents] = useState([]);
-  const colors = new Map();
 
   function onConnect() { }
 
@@ -17,28 +16,17 @@ export function MessageBoard() {
     return setEvents(prev => [...prev, { type: 'warning', value: 'You are now disconnected' }]);
   }
 
-  function onMessage(value, type, username) {
-    console.log(value, type, username)
+  function onMessage(value, type) {
     if (type == 'warning') return setEvents([{ type: 'warning', value }]);
-    if (!colors.has(username)) {
-      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-      colors.set(username, `#${randomColor}`);
-    }
     if (type == user.id) {
-      return setEvents(prev => [...prev, { type: 'message', value, username, bg: colors.get(username) }]);
+      return setEvents(prev => [...prev, { type: 'message', value }]);
     } else {
-      return setEvents(prev => [...prev, { type: 'inc_message', value, username, bg: colors.get(username) }]);
+      return setEvents(prev => [...prev, { type: 'inc_message', value }]);
     }
   }
 
   function onChatHistory(history) {
-    const usernames = history.map(e => e.username);
-    usernames.map(username => {
-      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-      if (!colors.has(username)) colors.set(username, `#${randomColor}`);
-    });
-    const addedStyles = history.map(e => { return { ...e, bg: colors.get(e.username) } })
-    setEvents(addedStyles);
+    setEvents(history);
   }
 
   useEffect(() => {
@@ -69,19 +57,7 @@ export function MessageBoard() {
         style={{ height: '95%', overflowY: 'auto' }}
         renderItem={(event, index) => (
           <List.Item style={{ padding: '5px 5px' }}>
-            <div key={index}>
-              {event.type != 'warning' &&
-                <div className='username'>
-                  {event.username}
-                </div>
-              }
-              <div
-                className={event.type}
-                style={{ backgroundColor: `${event.bg}` }}
-              >
-                {event.value}
-              </div>
-            </div>
+            <div key={index} className={event.type}>{event.value}</div>
           </List.Item>
         )}
       />
