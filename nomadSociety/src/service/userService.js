@@ -54,7 +54,6 @@ export async function toggleFollow(userId) {
   const response = await axios.post(URL + 'users/follow/' + userId, {}, config);
   return response.data;
 }
-<<<<<<< HEAD
 
 export async function recomendation(userId){
   const body = {
@@ -64,5 +63,4 @@ export async function recomendation(userId){
   console.log(response, 9999)
   return response.data
 }
-=======
->>>>>>> parent of 46bd73c... recomendationService
+
