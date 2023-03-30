@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { PostContext } from '../PostCard';
 import { Button, Modal, Tooltip, Form, Input, Row, Upload } from 'antd';
 import { EditOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import { editPost } from '../../../../service/postService';
 
 export function EditPostButton() {
   const { post, setPostData } = useContext(PostContext);
@@ -13,11 +12,8 @@ export function EditPostButton() {
     form.setFieldsValue(post)
   }, [editing])
 
-  async function handleSubmit(inputs){
-    const id = post._id;
-    const editedPost = await editPost(id,inputs);
-    setPostData(editedPost);
-    setEditing(false);
+  const handleSubmit = (inputs) => {
+    console.log(inputs);
   }
 
   return (
@@ -46,6 +42,12 @@ export function EditPostButton() {
           <Form.Item label='Content' name='content'>
             <Input.TextArea autoSize={{ minRows: 3 }} />
           </Form.Item>
+          <Row justify='space-between'>
+            <Button icon={<DeleteOutlined />}>Delete post image</Button>
+            <Form.Item name='imagePost'>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Form.Item>
+          </Row>
           <Row justify='end' style={{ gap: '10px' }}>
             <Button type='primary' onClick={() => setEditing(false)}>Cancel</Button>
             <Button type='primary' htmlType='submit'>Submit</Button>
