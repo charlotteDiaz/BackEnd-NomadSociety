@@ -21,12 +21,11 @@ const RelatedFriends = () => {
         style={{ background: 'rgb(23,119,255, 0.6)', }}
       >
         <Collapse.Panel header={  <UsergroupAddOutlined />}>
-        
 
         </Collapse.Panel>
         </Collapse>
         </Affix>
-        
+
         // <Button type="primary" style={{
         //     position: 'absolute',
         //     right: '20px',
@@ -39,7 +38,7 @@ const RelatedFriends = () => {
         //   }}>
         //     <UsergroupAddOutlined />
         //   </Button>
-    );
+      )
 
   const { user } = useContext(GlobalContext);
   const [relatedFriends, setRelatedFriends] = useState([]);
