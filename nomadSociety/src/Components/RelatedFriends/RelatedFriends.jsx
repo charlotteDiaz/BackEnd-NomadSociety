@@ -79,7 +79,7 @@ const RelatedFriends = () => {
     </Affix>
   </>
   );
->>>>>>> develop
+
 };
 
 export default RelatedFriends;
