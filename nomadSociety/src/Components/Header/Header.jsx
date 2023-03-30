@@ -37,7 +37,6 @@ export const Header = () => {
           onSearch={(input) => onSearch(input)}
           placeholder='Find users in Nomad'
           enterButton='Search'
-          style={{width:'65%'}}
         />
       </Dropdown>
     </div>
