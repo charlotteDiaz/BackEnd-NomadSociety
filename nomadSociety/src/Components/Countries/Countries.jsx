@@ -25,7 +25,6 @@ const Countries = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [hovered, setHovered] = useState(null);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     setLoading(true);
