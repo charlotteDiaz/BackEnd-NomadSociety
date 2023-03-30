@@ -60,7 +60,8 @@ export async function recomendation(userId){
     'id':userId
   }
 
-  const response = axios.post('https://flask-production-782a.up.railway.app/recomendations', body)
+  const response = await axios.post('https://flask-production-782a.up.railway.app/recomendations', body)
+  console.log(response, 9999)
 
   return response.data
 }
