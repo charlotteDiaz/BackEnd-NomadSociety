@@ -1,11 +1,12 @@
-import { useContext, useEffect, useState, createContext } from "react";
-import { useParams, useNavigate } from "react-router";
-import { GlobalContext } from "../../context/UsersState";
-import { UserCard } from "./components/UserCard/UserCard";
-import { UserContent } from "./components/UserContent/UserContent";
-import { getUserById } from "../../service/userService";
-import CountryUser from "./components/CountryUser/CountryUser";
-import { Spin, Row, Divider, Skeleton } from "antd";
+import { Divider } from 'antd';
+import { useContext, useEffect, useState, createContext } from 'react';
+import { useParams, useNavigate } from 'react-router';
+import { GlobalContext } from '../../context/UsersState';
+import { UserCard } from './components/UserCard/UserCard';
+import { UserContent } from './components/UserContent/UserContent';
+import { getUserById } from '../../service/userService';
+import CountryUser from './components/CountryUser/CountryUser';
+import { Spin, Row } from 'antd';
 
 export const ProfileContext = createContext();
 
@@ -19,42 +20,29 @@ export const Profile = () => {
   useEffect(() => {
     async function getData() {
       setLoading(true);
-      if (!userId) return navigate("/profile/" + user._id);
+      if (!userId) return navigate('/profile/' + user._id);
       const response = await getUserById(userId);
-      if (!response) return navigate("/home");
+      if (!response) return navigate('/home');
       setUserData(response);
       setLoading(false);
-    }
+      
+    };
     getData();
-  }, [userId]);
+  }, [userId])
 
   return (
     <ProfileContext.Provider value={{ userData, setUserData }}>
-      <Skeleton style={{
-        padding: '50px',
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        width: '100%'
-      }}  paragraph={{
-        rows: 20,
-     
-      }} size={'small'} avatar loading={isLoading}>
-       
+      {console.log('28, userData: ',userData)}
+      <Spin spinning={isLoading}>
         <Row>
-
           <UserCard />
         </Row>
-
         <Row>
+          <Divider plain />
           <CountryUser />
-        </Row>
-       
-
-        <Row>
           <UserContent />
         </Row>
-      </Skeleton>
+      </Spin>
     </ProfileContext.Provider>
   );
 };

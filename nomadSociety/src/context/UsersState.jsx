@@ -1,11 +1,14 @@
-import React, { createContext, useReducer, useEffect } from 'react'
+import React, { createContext, useReducer } from 'react'
 import * as userService from '../service/userService'
 import AppReducer from './UserReducer.js'
 import axios from 'axios'
 
+//const token = userService.validateToken();
+const token = JSON.parse(localStorage.getItem("token"));
+
 const initialState = {
-  token: null,
-  user: null,
+  token: token ? token : null,
+  user: token ? await userService.getUserInfo(1, 1, 1, 1) : null,
   isSuccess: false,
   isError: false,
   isErrorRegister: false,
@@ -16,23 +19,6 @@ export const GlobalContext = createContext(initialState);
 
 export const UsersProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-
-  async function initialData() {
-    const token = await userService.validateToken();
-    const user = token ? userService.getUserInfo(1, 1, 1, 1) : null;
-    dispatch({
-      type: 'SET_TOKEN',
-      payload: token,
-    })
-    dispatch({
-      type: 'GET_USER_INFO',
-      payload: user,
-    })
-  }
-
-  useEffect(() => {
-    initialData();
-  }, [])
 
   const login = async (user) => {
     try {
@@ -97,7 +83,7 @@ export const UsersProvider = ({ children }) => {
         authorization: token,
       },
     });
-    if (res.data) {
+    if(res.data){
       localStorage.setItem('user', JSON.stringify(res.data));
     }
     dispatch({
@@ -135,16 +121,16 @@ export const UsersProvider = ({ children }) => {
     return res;
   }
   const getUserById = async (id) => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const res = await axios.get(`https://backend-nomadsociety-development.up.railway.app/users/id/${id}`, {
-      headers: {
-        Authorization: token
-      }
-    });
-    dispatch({
-      type: 'GET_USER_BY_ID',
-      payload: res.data,
-    });
+  const token = JSON.parse(localStorage.getItem('token'));
+  const res = await axios.get(`https://backend-nomadsociety-development.up.railway.app/users/id/${id}`, {
+    headers: {
+      Authorization: token
+    }
+  });
+  dispatch({
+    type: 'GET_USER_BY_ID',
+    payload: res.data,
+  });
   }
   return (
     <GlobalContext.Provider
@@ -153,7 +139,7 @@ export const UsersProvider = ({ children }) => {
         user: state.user,
         isSuccess: state.isSuccess,
         isError: state.isError,
-        isErrorRegister: state.isErrorRegister,
+        isErrorRegister:state.isErrorRegister,
         isLogOut: state.isLogOut,
         login,
         register,

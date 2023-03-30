@@ -5,18 +5,21 @@ import { uploadAvatar } from '../../../../service/userService';
 
 export const UploadAvatar = () => {
 
-  const uploadImage = (e) => {
-    const file = e.file;
-    console.log(file);
-    uploadAvatar(file).then((res) => {
-      console.log(res);
-    }).catch((err) => {
-      console.log(err);
-    })
+  const uploadImage = async (options) => {
+    const { onSuccess, onError, onProgress, file } = options;
+    const fmData = new FormData();
+    fmData.append("image", file);
+    try {
+      await uploadAvatar(fmData);
+      onSuccess("Ok");
+    } catch (err) {
+      const error = new Error(err.message);
+      onError({ error });
+    }
   }
 
   return (
-    <Upload name='image' multiple={false} maxCount='1' onChange={uploadImage}>
+    <Upload customRequest={uploadImage}>
       <Button icon={<UploadOutlined />}>Click to Upload</Button>
     </Upload>
   )

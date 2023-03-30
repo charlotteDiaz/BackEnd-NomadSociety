@@ -7,8 +7,6 @@ import { CommentsButton } from './components/comments/CommentsButton.jsx'
 import { CommentsDisplay } from './components/comments/CommentsDisplay';
 import { CommentsInputForm } from './components/comments/CommentsInputForm';
 import { Card, Divider } from 'antd';
-import { emojisBySentiment } from '../../../resources/sentimentAnalysis';
-import { useNavigate } from 'react-router';
 
 export const PostContext = createContext();
 
@@ -16,24 +14,16 @@ export function PostCard({ post, forwardedRef }) {
   const [postData, setPostData] = useState(post)
   const [showComments, setShowComments] = useState(false);
 
-
-  const emojiSentiment = emojisBySentiment(postData?.sentiment)
-  
   return (
     <PostContext.Provider value={{ post: postData, setPostData }}>
-      <Card hoverable title={<PostHeader />} style={{ width: '100%', maxWidth: '450px', paddingTop: 'none', WebkitBoxShadow: '-15px -4px 43px 0px rgba(214,214,214,1)',
-MozBoxShadow: '-15px -4px 43px 0px rgba(214,214,214,1)',
-boxShadow: '-15px -4px 43px 0px rgba(214,214,214,1)' }} >
-        <div style={{ paddingTop: 'none' }} ref={forwardedRef}>
+      <Card hoverable title={<PostHeader />} style={{ width: '100%', maxWidth: '450px', paddingTop:'none' }}>
+        <div style={{paddingTop:'none'}} ref={forwardedRef}>
           <PostImage />
           <PostContent />
           <Divider type='horizontal' />
-          <div style={{ display: 'flex', justifyContent: "space-between", gap: '20px' }}>
-            <div style={{ display: 'flex', gap: '20px' }}>
-              <LikeButton />
-              <CommentsButton handleOpen={() => setShowComments(!showComments)} />
-            </div>
-            <div>{emojiSentiment}</div>
+          <div style={{ display: 'flex', gap: '20px' }}>
+            <LikeButton />
+            <CommentsButton handleOpen={() => setShowComments(!showComments)} />
           </div>
           {showComments &&
             <>

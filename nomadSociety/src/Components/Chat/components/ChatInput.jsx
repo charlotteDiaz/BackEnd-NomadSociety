@@ -8,10 +8,10 @@ export function ChatInput() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function emitMessage(input) {
-    if (!input) return;
+    if (!input.message) return;
     try {
       setIsLoading(true);
-      await socket.emitWithAck('message', input, activeRoom);
+      await socket.emitWithAck('message', input.message, activeRoom);
       form.resetFields();
       setIsLoading(false);
     } catch (error) {
@@ -20,24 +20,20 @@ export function ChatInput() {
   }
 
   return (
-    <div style={{ marginTop: '5px' }}>
+    <>
+      <Divider />
       <Form
         disabled={!socket || !socket.connected || isLoading}
         form={form}
-        layout='horizontal'
+        layout='inline'
         autoComplete='off'
-        labelCol={24}
-        wrapperCol={24}
+        onFinish={(input) => emitMessage(input)}
       >
-        <Form.Item name='message'>
-          <Input.Search
-            autoFocus={true}
-            enterButton='Send'
-            onSearch={emitMessage}
-            loading={isLoading}
-          />
+        <Form.Item name='message' style={{ width: '410px' }}>
+          <Input autoFocus={true} />
         </Form.Item>
+        <Button type="primary" htmlType="submit">Enviar</Button>
       </Form>
-    </div>
+    </>
   )
 }
