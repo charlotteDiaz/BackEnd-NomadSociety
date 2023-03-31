@@ -60,14 +60,13 @@ export const CreatePostNew = ({onAction, onClose}) => {
               textAlign : 'center',
             },
           })
-
           navigate('/');
           onClose();
           location.reload();
           form.resetFields();
         }
       });
-
+      
   }else{
     return messageApi.open({
       type: 'error',
